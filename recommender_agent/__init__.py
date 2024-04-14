@@ -1,0 +1,1 @@
+from recommender_agent.recommenderSystem import CoreRecommendation
