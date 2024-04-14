@@ -31,7 +31,7 @@ En el presente proyecto muestro la construcción de una sistema de recomendació
 * Instalar Python (<a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>).
 * Obtener el API KEY de OpenAI (opcional) (<a href="https://openai.com/">https://openai.com/</a>).
 
-## Inicializacion
+## Inicializacion manual
 
 * Clonar el repositorio
   ```sh
@@ -51,8 +51,10 @@ En el presente proyecto muestro la construcción de una sistema de recomendació
   pip install -r requirements.txt
   ```
 
-
-
+## Instalando con pip
+```sh
+pip install recommender-agent
+```
 # Ejemplo de implementacion del sistema
 #### Imports 
 ```python
@@ -68,7 +70,7 @@ books.drop(columns=["isbn13","thumbnail","subtitle"],axis=1,inplace=True)
 #### Un requisito es que cada uno de los elementos tengan un id
 ```python
 books["id"] = books.index + 1
-
+```
 #### Se convierte a diccionario el dataset
 ```python
 books_dict = books.to_dict(orient='records') 

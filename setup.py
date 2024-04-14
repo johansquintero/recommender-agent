@@ -1,11 +1,15 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as d:
+    description = d.read()
+
 setup(
     name='recommender-agent',
-    version='0.0.1',
+    version='0.0.2',
     license= 'MIT',
     description="En el presente proyecto muestro la construcción de una sistema de recomendación, el sistema permite recomendar recursos a través del uso de mecanismos de Procesamiento de lenguaje natura como agentes langchain, IA generatica y embeddings.",
-    long_description= open('README.md').read(),
+    long_description= description,
+    long_description_content_type="text/markdown",
     author="Johan sebastian quintero rojas",
     install_requires= [
         'numpy<1.26.0',
