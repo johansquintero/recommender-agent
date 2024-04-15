@@ -2,10 +2,11 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from recommender_agent.components.vectorStoreClient import Client
 from recommender_agent.components.agent import RecommenderAgent
 from langchain.chat_models import ChatOpenAI
+import torch, subprocess
 
 EMBEDDING_MODEL_NAME = "BAAI/bge-base-en-v1.5"
 ENCODE_KWARGS = {'normalize_embeddings': True} # set True to compute cosine similarity
-MODEL_KWARGS = {'device': 'cpu'}
+MODEL_KWARGS = {'device': 'cuda' if torch.cuda.is_available() else 'cpu'}#si esta cuda habilitado se crearan los embeddings con este
 
 HUGGINFACE_MODEL_NAME = "TheBloke/Mistral-7B-OpenOrca-GGUF"
 HUGGINFACE_BASENAME = "mistral-7b-openorca.Q4_K_M.gguf"
@@ -27,8 +28,15 @@ class CoreRecommendation:
         else:
             from langchain.callbacks.manager import CallbackManager
             from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-            from langchain.llms import LlamaCpp
             from huggingface_hub import hf_hub_download
+            
+            if torch.cuda.is_available():
+                # Nombre y versión del paquete que deseas instalar
+                paquete = "llama-cpp-python==0.2.11"
+                # Ejecutar el comando pip con los argumentos específicos
+                subprocess.check_call(["pip", "install", "--no-deps", "--install-option=--CMAKE_ARGS='-DLLAMA_CUBLAS=on'--install-option=--FORCE_CMAKE=1", paquete])
+                                            
+            from langchain.llms import LlamaCpp            
 
             model_path = hf_hub_download(repo_id=HUGGINFACE_MODEL_NAME, filename=HUGGINFACE_BASENAME)
             callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])

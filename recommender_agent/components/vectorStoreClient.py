@@ -1,5 +1,6 @@
 from langchain.vectorstores import Chroma
 import os
+import time
 
 class Client:
     def __init__(self, resources:list[dict],collection_name):
@@ -46,8 +47,11 @@ class Client:
         else:
             texts = self.get_texts_for_resources()
             ids = [str(resourse['id']) for resourse in self.resources]
+            start = time.time()
+            print('creating embeddings...')
             self.vectordb = Chroma.from_texts(texts=texts,persist_directory = path, metadatas=self.resources,embedding = embedding_model, collection_name=self.collection_name, ids = ids)
-            print('Embeddings completed!')
+            end = time.time()
+            print(f'Embeddings completed! total time={end-start}')
         return self.vectordb
     
     def delete_collection(self):

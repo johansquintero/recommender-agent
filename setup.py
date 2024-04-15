@@ -5,7 +5,7 @@ with open("README.md", "r") as d:
 
 setup(
     name='recommender-agent',
-    version='0.0.1',
+    version='0.2',
     license= 'MIT',
     description="En el presente proyecto muestro la construcción de una sistema de recomendación, el sistema permite recomendar recursos a través del uso de mecanismos de Procesamiento de lenguaje natura como agentes langchain, IA generatica y embeddings.",
     long_description= description,
@@ -22,6 +22,7 @@ setup(
         'sentence-transformers==2.2.2',
         'openai<1.0.0',
         'llama-cpp-python==0.2.11',
+        'torch==2.1.2'
     ],
     author_email="metalium144@gmail.com",
     packages=find_packages(),
