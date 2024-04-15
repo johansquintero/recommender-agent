@@ -43,6 +43,7 @@ class Client:
     def create_collection(self,embedding_model):
         path = f"recommender_agent\persists\{self.collection_name}"
         if(self.has_data()):
+            print("Embeddings already existis, persisting the path...")
             self.vectordb = Chroma(persist_directory = path, collection_name=self.collection_name, embedding_function= embedding_model)
         else:
             texts = self.get_texts_for_resources()

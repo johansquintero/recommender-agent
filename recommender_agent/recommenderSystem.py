@@ -28,13 +28,11 @@ class CoreRecommendation:
         else:
             from langchain.callbacks.manager import CallbackManager
             from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
-            from huggingface_hub import hf_hub_download
+            from huggingface_hub import hf_hub_download           
             
             if torch.cuda.is_available():
-                # Nombre y versión del paquete que deseas instalar
-                paquete = "llama-cpp-python==0.2.11"
-                # Ejecutar el comando pip con los argumentos específicos
-                subprocess.check_call(["pip", "install", "--no-deps", "--install-option=--CMAKE_ARGS='-DLLAMA_CUBLAS=on'--install-option=--FORCE_CMAKE=1", paquete])
+                import os
+                os.system(f"CMAKE_ARGS='-DLLAMA_CUBLAS=on' FORCE_CMAKE=1 pip install llama-cpp-python==0.2.23")
                                             
             from langchain.llms import LlamaCpp            
 
