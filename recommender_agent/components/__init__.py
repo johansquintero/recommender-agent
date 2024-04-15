@@ -1,0 +1,2 @@
+from recommender_agent.components.agent import RecommenderAgent
+from recommender_agent.components.vectorStoreClient import Client

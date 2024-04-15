@@ -2,9 +2,6 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from recommender_agent.components.vectorStoreClient import Client
 from recommender_agent.components.agent import RecommenderAgent
 from langchain.chat_models import ChatOpenAI
-from dotenv import load_dotenv 
-
-load_dotenv()
 
 EMBEDDING_MODEL_NAME = "BAAI/bge-base-en-v1.5"
 ENCODE_KWARGS = {'normalize_embeddings': True} # set True to compute cosine similarity
