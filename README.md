@@ -1,17 +1,15 @@
 # Sistema de recomendación con agente langchain
 
-<!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
 En el presente proyecto muestro la construcción de una sistema de recomendación, el sistema permite recomendar recursos a través del uso de mecanismos de Procesamiento de lenguaje natura como agentes langchain, IA generatica y embeddings.
 
 
 ## Procesos 
 
-* Configuración de ChromaDb - Vector Similarity
-* Creación del módulo de generación de embeddings ya sea por openAi o algun otro modelo
-* Módulo de recomendación generativo con agentes langchain y llms
+* Configuración y creacion del modulo de la base de datos vectorial con ChromaDb
+* Creación del módulo y configuracion del agente Langchain
+* Módulo principal de recomendación el cual gestiona e integrar los dos anteriores modulos
 
-<!-- GETTING STARTED -->
 ## Tecnologías
 
 * Python
@@ -21,17 +19,17 @@ En el presente proyecto muestro la construcción de una sistema de recomendació
 * HugginFace
 * pytorch
 * OpenAI
+* Groq
 * Embeddings
-* Mistral
-* GPT
+* LLM
 
 
 ## Prerequisitos
-
 * Instalar Python (<a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>).
-* Obtener el API KEY de OpenAI (opcional) (<a href="https://openai.com/">https://openai.com/</a>).
+* Obtener una API KEY de OpenAI (opcional si se va a utilizar Groq) (<a href="https://openai.com/">https://openai.com/</a>).
+* Obtener una API KEY de groq (opcional si se va a utilizar OpenAI) (<a href="https://console.groq.com/keys">https://console.groq.com/keys</a>)
 
-## Inicializacion manual
+## Instalacion manual desde el repositorio
 
 * Clonar el repositorio
   ```sh
@@ -75,17 +73,25 @@ books["id"] = books.index + 1
 ```python
 books_dict = books.to_dict(orient='records') 
 ```
-#### Si se cuenta con una api key de openai se agrega en este apartado
+### la libreria dispone de dos alternativas para aplicar un LLM uno por la api de OpenAI y el otro por la api de Groq, cabe recalcar que es obligatorio contar con alguna de estas 2 apis
+
+#### Si se cuenta con una api key de openai este seria el proceso
 ```python
 openai_api_key = ""
 ```
 #### Se inicializa la instancia el recomendador
 ```python
-recommender = CoreRecommendation(openai_key=openai_api_key)
+recommender_open_ai = CoreRecommendation(openai_key=openai_api_key)
 ```
 #### De la intancia anterior se crea ruta de persistencia de los recursos
 ```python
-recommender.init_components(collection_name="books",resources=books_dict)
+recommender_open_ai.init_components(collection_name="books",resources=books_dict)
+```
+#### El el caso de usar groq este es el metodo
+```python
+groq_api_key=""
+recommender_groq = CoreRecommendation(groq_key=groq_api_key)
+recommender_groq.init_components(collection_name="books",resources=books_dict)
 ```
 #### Usuario de prueba en formato JSON
 ```python
@@ -123,7 +129,9 @@ user = {
 ```
 #### Se ejecuta el recomendador con la informacion del usuario
 ```python
-print(recommender.get_recommendation(user=user))
+response = recommender_groq.get_recommendation(user=user)
+print(f"Usuario={response['user']} \n") 
+print(f"Recomendaciones= {response['rec']}")
 ```
 
 
